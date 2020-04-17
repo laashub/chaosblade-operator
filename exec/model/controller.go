@@ -55,7 +55,9 @@ type BaseExperimentController struct {
 
 func (b *BaseExperimentController) Destroy(ctx context.Context, expSpec v1alpha1.ExperimentSpec,
 	oldExpStatus v1alpha1.ExperimentStatus) *spec.Response {
-	expModel := ExtractExpModelFromExperimentStatus(oldExpStatus)
+	// TODO 如果使用了 update 命令，则 expSpec 是最新的 spec，所以获取有问题
+	//expModel := ExtractExpModelFromExperimentStatus(oldExpStatus)
+	expModel := ExtractExpModelFromExperimentSpec(expSpec)
 	return b.Exec(ctx, expModel)
 }
 
